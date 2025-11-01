@@ -14,8 +14,8 @@ help:
 	@echo "  make docker-image          Build ISO image using a Docker container"
 	@echo "  make qemu-bios             Boot ISO image in QEMU (BIOS mode)"
 	@echo "  make qemu-uefi             Boot ISO image in QEMU (UEFI boot)"
-	@echo "  make usb                   Write ISO to USB device"
-	@echo "  make FAT                   Add a FAT partition ot the USB stick"
+#	@echo "  make usb                   Write ISO to USB device"
+#	@echo "  make FAT                   Add a FAT partition ot the USB stick"
 	@echo "  make clean                 Clean up temporary files and folders"
 	@echo "  make mrproper      Make clean and remove the output ISO"
 	@echo
@@ -120,29 +120,29 @@ image.qcow:
 	# Create a virtual disk for QEMU.
 	qemu-img create -f qcow2 $@ 10G
 
-usb:
+#usb:
 	# Write the image to usb stick.
-	@echo "This will overwrite all data on ${USBDEV}!"
-	@read -p "Type 'yes' if you really want to do this: " proceed; \
-	if [ $$proceed = "yes" ] ; then \
-		echo "writing image to ${USBDEV}"; \
-		sudo dd if=${TARGET} of=${USBDEV} bs=4k ; \
-		sync ; \
-	else \
-		echo "Aborting" ; \
-	fi
+#	@echo "This will overwrite all data on ${USBDEV}!"
+#	@read -p "Type 'yes' if you really want to do this: " proceed; \
+#	if [ $$proceed = "yes" ] ; then \
+#		echo "writing image to ${USBDEV}"; \
+#		sudo dd if=${TARGET} of=${USBDEV} bs=4k ; \
+#		sync ; \
+#	else \
+#		echo "Aborting" ; \
+#	fi
 
-FAT:
-	# Add a FAT partition in the remaining free space (e.g. for driver files).
-	@echo "This will overwrite ${USBDEV}!"
-	@read -p "Type 'yes' if you really want to do this: " proceed; \
-	if [ $$proceed = "yes" ] ; then \
-	echo " , , 0xb" | sudo sfdisk ${USBDEV} -N 3 ;\
-		sudo mkfs.vfat ${USBDEV}3 ;\
-		sync ;\
-	else \
-		echo "Aborting" ; \
-	fi
+#FAT:
+#	# Add a FAT partition in the remaining free space (e.g. for driver files).
+#	@echo "This will overwrite ${USBDEV}!"
+#	@read -p "Type 'yes' if you really want to do this: " proceed; \
+#	if [ $$proceed = "yes" ] ; then \
+#	echo " , , 0xb" | sudo sfdisk ${USBDEV} -N 3 ;\
+#		sudo mkfs.vfat ${USBDEV}3 ;\
+#		sync ;\
+#	else \
+#		echo "Aborting" ; \
+#	fi
 
 Docker: Dockerfile
 	docker build -t debian-headless .
