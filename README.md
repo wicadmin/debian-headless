@@ -20,10 +20,8 @@ via ssh or serial console.
     edit preseed.cfg
 
     # Build image
-    make image
+    make docker-image
 
-    # Write image to usb stick
-    make usb
 
 
 ## Motivation
@@ -226,29 +224,7 @@ panels show the local screen (left) and the serial console (right):
 ![](screenshot.png)
 
 
-## Write to usb stick or burn cd
 
-If you still have a cdrom drive, use your favorite ISO burner to write the
-image to cd. I can't find my old usb-cd drive and prefer using a usb stick,
-anyway:
-
-Insert a USB stick and find out its device file
-
-    lsblk
-
-**Double check**, that `USBDEV` is set correctly in `Makevars`.
-
-**Caution:** The next two steps will write to the device configured in the
-`USBDEV`. If you failed to set that correctly, you will overwrite whatever disk
-happens to be associated with that device!
-
-Write the image to the stick:
-
-    make usb
-
-Add a FAT partition to the stick:
-
-    make FAT
 
 This may be useful if you need to add custom firmware files or anything else
 you would like to use during installation.
