@@ -174,7 +174,7 @@ or
 ## Building the ISO
 
     make clean
-    make image
+    make docker-image
 
 
 ## Manual modifications to the image
